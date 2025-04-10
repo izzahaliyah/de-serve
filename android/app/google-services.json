@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "2827935747",
+    "project_id": "de-serve",
+    "storage_bucket": "de-serve.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2827935747:android:2a18dd1687d9ec8f6aee36",
+        "android_client_info": {
+          "package_name": "com.example.deserve"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB_n5ziz89vjUz88IXoxWUn93YWcYIbBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
