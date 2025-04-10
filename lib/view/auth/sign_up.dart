@@ -1,5 +1,7 @@
-import 'package:deserve/view/auth/enter_pin_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'enter_pin_page.dart'; // Import the next page for PIN entry
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -9,28 +11,101 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  String? _verificationId;
 
-  // void _register() {
-  //   if (_formKey.currentState!.validate()) {
-  //     String phoneNumber = _phoneController.text.trim();
-  //     // Call Firebase or API to register using phone number
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Phone Number: $phoneNumber')),
-  //     );
-  //   }
-  // }
-
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState!.validate()) {
       String phone = _phoneController.text.trim();
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => EnterPinPage(phoneNumber: phone),
-        ),
+      // Send OTP to the user's phone
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // If auto-verification is successful, sign in the user
+          await FirebaseAuth.instance.signInWithCredential(credential);
+          // After successful sign-in, push to the next page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EnterPinPage(phoneNumber: phone),
+            ),
+          );
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          // Handle error
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(e.message ?? 'Verification Failed')),
+          );
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          // Save the verificationId for later use
+          _verificationId = verificationId;
+          _showOTPDialog(verificationId);
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          // Handle timeout (optional)
+        },
       );
     }
+  }
+
+  void _showOTPDialog(String verificationId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController otpController = TextEditingController();
+
+        return AlertDialog(
+          title: Text("Enter OTP"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: otpController,
+                decoration: InputDecoration(hintText: "Enter OTP"),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () async {
+                String otp = otpController.text.trim();
+                PhoneAuthCredential credential = PhoneAuthProvider.credential(
+                  verificationId: verificationId,
+                  smsCode: otp,
+                );
+
+                // Sign in with the OTP
+                try {
+                  await FirebaseAuth.instance.signInWithCredential(credential);
+                  // Store user data in Firestore (for new users)
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid)
+                      .set({
+                    'phone': FirebaseAuth.instance.currentUser!.phoneNumber,
+                    'createdAt': Timestamp.now(),
+                  });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EnterPinPage(
+                          phoneNumber:
+                              FirebaseAuth.instance.currentUser!.phoneNumber!),
+                    ),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Invalid OTP, please try again')),
+                  );
+                }
+              },
+              child: Text('Submit OTP'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
