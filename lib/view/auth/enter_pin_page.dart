@@ -5,7 +5,7 @@ import '../profile/profile_page.dart';
 class EnterPinPage extends StatefulWidget {
   final String phoneNumber;
 
-  EnterPinPage({required this.phoneNumber});
+  const EnterPinPage({super.key, required this.phoneNumber});
 
   @override
   _EnterPinPageState createState() => _EnterPinPageState();
@@ -19,7 +19,7 @@ class _EnterPinPageState extends State<EnterPinPage> {
 
     if (pin.length < 4 || pin.length > 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('PIN must be between 4 to 6 digits')),
+        const SnackBar(content: Text('PIN must be between 4 to 6 digits')),
       );
     } else {
       // Save the PIN to a database or secure storage here
@@ -27,7 +27,7 @@ class _EnterPinPageState extends State<EnterPinPage> {
       print('Phone: ${widget.phoneNumber}, PIN: $pin');
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('PIN registered successfully!')),
+        const SnackBar(content: Text('PIN registered successfully!')),
       );
 
       // // Navigate to next page or back to login
@@ -45,10 +45,10 @@ class _EnterPinPageState extends State<EnterPinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFA8BBA2),
+      backgroundColor: const Color(0xFFA8BBA2),
       appBar: AppBar(
-        title: Text('Set Your PIN'),
-        backgroundColor: Color(0xFFA8BBA2),
+        title: const Text('Set Your PIN'),
+        backgroundColor: const Color(0xFFA8BBA2),
         elevation: 0,
       ),
       body: Padding(
@@ -57,9 +57,9 @@ class _EnterPinPageState extends State<EnterPinPage> {
           children: [
             Text(
               'Create a PIN for ${widget.phoneNumber}',
-              style: TextStyle(fontSize: 20, color: Colors.white),
+              style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             TextField(
               controller: _pinController,
               obscureText: true,
@@ -69,26 +69,26 @@ class _EnterPinPageState extends State<EnterPinPage> {
                 filled: true,
                 fillColor: Colors.white24,
                 hintText: 'Enter 4 to 6 digit PIN',
-                hintStyle: TextStyle(color: Colors.white70),
+                hintStyle: const TextStyle(color: Colors.white70),
                 counterText: '',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: _submitPin,
-              child: Text('Save PIN'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
-                foregroundColor: Color(0xFFA8BBA2),
-                minimumSize: Size(double.infinity, 50),
+                foregroundColor: const Color(0xFFA8BBA2),
+                minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
+              child: const Text('Save PIN'),
             ),
           ],
         ),

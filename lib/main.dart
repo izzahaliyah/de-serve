@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp();
-    runApp(MyApp());
+    runApp(const MyApp());
   } catch (e) {
     print('Firebase initialization error: $e');
   }
@@ -28,15 +28,15 @@ void main() async {
 // }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'De-Serve',
       theme: ThemeData(
-        primaryColor: Color(0xFFA8BBA2),
+        primaryColor: const Color(0xFFA8BBA2),
         scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFFA8BBA2),
         ),
       ),
@@ -44,10 +44,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
-        '/welcome': (context) => WelcomePage(),
-        '/login': (context) => LoginPage(),
-        '/signup': (context) => SignUpPage(),
+        '/': (context) => const SplashScreen(),
+        '/welcome': (context) => const WelcomePage(),
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignUpPage(),
         // '/home': (context) => HomePage(),
       },
     );

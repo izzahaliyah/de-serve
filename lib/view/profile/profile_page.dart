@@ -5,7 +5,7 @@ import '../screens/home_screen.dart';
 class ProfilePage extends StatefulWidget {
   final String phoneNumber;
 
-  ProfilePage({required this.phoneNumber});
+  const ProfilePage({super.key, required this.phoneNumber});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -33,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
       print("Gender: $gender");
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Profile updated successfully!')),
+        const SnackBar(content: Text('Profile updated successfully!')),
       );
 
       // Navigate to homepage or dashboard
@@ -49,23 +49,23 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFA8BBA2),
+      backgroundColor: const Color(0xFFA8BBA2),
       appBar: AppBar(
-        title: Text('Update Profile'),
-        backgroundColor: Color(0xFFA8BBA2),
+        title: const Text('Update Profile'),
+        backgroundColor: const Color(0xFFA8BBA2),
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
-              Text(
+              const Text(
                 'Tell us more about yourself',
                 style: TextStyle(fontSize: 20, color: Colors.white),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
 
               // Name
               TextFormField(
@@ -74,7 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Enter your name' : null,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Phone (readonly)
               TextFormField(
@@ -82,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 readOnly: true,
                 decoration: _inputDecoration('Phone Number'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Email
               TextFormField(
@@ -91,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Enter your email' : null,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Gender Dropdown
               DropdownButtonFormField<String>(
@@ -116,20 +116,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 validator: (value) =>
                     value == null ? 'Please select your gender' : null,
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
 
               // Submit Button
               ElevatedButton(
                 onPressed: _submitProfile,
-                child: Text('Save Profile'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
-                  foregroundColor: Color(0xFFA8BBA2),
-                  minimumSize: Size(double.infinity, 50),
+                  foregroundColor: const Color(0xFFA8BBA2),
+                  minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
+                child: const Text('Save Profile'),
               ),
             ],
           ),
@@ -141,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(color: Colors.white),
+      labelStyle: const TextStyle(color: Colors.white),
       filled: true,
       fillColor: Colors.white24,
       border: OutlineInputBorder(

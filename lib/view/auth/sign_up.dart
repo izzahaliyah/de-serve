@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'enter_pin_page.dart'; // Import the next page for PIN entry
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -56,13 +58,13 @@ class _SignUpPageState extends State<SignUpPage> {
         TextEditingController otpController = TextEditingController();
 
         return AlertDialog(
-          title: Text("Enter OTP"),
+          title: const Text("Enter OTP"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: otpController,
-                decoration: InputDecoration(hintText: "Enter OTP"),
+                decoration: const InputDecoration(hintText: "Enter OTP"),
               ),
             ],
           ),
@@ -96,11 +98,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Invalid OTP, please try again')),
+                    const SnackBar(content: Text('Invalid OTP, please try again')),
                   );
                 }
               },
-              child: Text('Submit OTP'),
+              child: const Text('Submit OTP'),
             ),
           ],
         );
@@ -118,8 +120,8 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Register with Phone'),
-        backgroundColor: Color(0xFFA8BBA2), // Dusty green
+        title: const Text('Register with Phone'),
+        backgroundColor: const Color(0xFFA8BBA2), // Dusty green
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -128,15 +130,15 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Enter your phone number',
                 style: TextStyle(fontSize: 20),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'e.g. +60123456789',
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.phone),
@@ -150,14 +152,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _submit,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFA8BBA2),
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  backgroundColor: const Color(0xFFA8BBA2),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 ),
-                child: Text('Register', style: TextStyle(fontSize: 16)),
+                child: const Text('Register', style: TextStyle(fontSize: 16)),
               ),
             ],
           ),
