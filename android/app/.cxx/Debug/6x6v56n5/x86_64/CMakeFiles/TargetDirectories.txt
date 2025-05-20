@@ -1,0 +1,2 @@
+D:/De-Serve/de-serve/android/app/.cxx/Debug/6x6v56n5/x86_64/CMakeFiles/edit_cache.dir
+D:/De-Serve/de-serve/android/app/.cxx/Debug/6x6v56n5/x86_64/CMakeFiles/rebuild_cache.dir

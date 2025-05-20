@@ -1,38 +1,28 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:deserve/view/home/main_home_page.dart';
+import 'package:deserve/view/profile/profile_completion_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'view/login/login.dart';
+import 'view/home/home_view.dart';
+import 'view/profile/profile_view.dart';
 import 'view/screens/splash_screen.dart';
-import 'view/screens/welcome_screen.dart';
-import 'view/auth/sign_up.dart';
-import 'view/auth/login.dart';
-// import 'view/screens/home_screen.dart';
-// import 'view/auth/register.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }
+import 'view/screens/welcome_view.dart';
+import 'view/set_pin/set_pin_view.dart';
+import 'view/otp/otp_view.dart';
+import 'view/signup/signup_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp();
-    runApp(const MyApp());
-  } catch (e) {
-    print('Firebase initialization error: $e');
-  }
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-//   runApp(MyApp());
-// }
-
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'De-Serve',
+      title: 'Deserve',
       theme: ThemeData(
         primaryColor: const Color(0xFFA8BBA2),
         scaffoldBackgroundColor: Colors.white,
@@ -40,50 +30,20 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xFFA8BBA2),
         ),
       ),
-      // home: HomePage(),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      home: FirebaseAuth.instance.currentUser != null
+          ? MainHomePage()
+          : SplashScreen(),
       routes: {
-        '/': (context) => const SplashScreen(),
-        '/welcome': (context) => const WelcomePage(),
-        '/login': (context) => const LoginPage(),
-        '/signup': (context) => const SignUpPage(),
-        // '/home': (context) => HomePage(),
+        // '/': (context) => const SplashScreen(),
+        '/welcome': (context) => WelcomeView(),
+        '/signup': (context) => SignUpView(),
+        '/otp': (context) => OTPView(verificationId: '', phoneNumber: ''),
+        '/setPin': (context) => SetPinView(),
+        '/profileCompletion': (context) => ProfileCompletionView(),
+        '/login': (context) => Login(),
+        '/home': (context) => HomeView(),
+        // '/profile': (context) => const ProfileView(),
       },
     );
   }
 }
-
-// Temporary placeholder pages
-// class LoginPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(body: Center(child: Text("Login Page")));
-//   }
-// }
-
-// class SignUpPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(body: Center(child: Text("Sign Up Page")));
-//   }
-// }
-
-//biar dulu
-// class HomePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Home Page'),
-//         centerTitle: true,
-//       ),
-//       body: Center(
-//         child: Text(
-//           'Welcome to Flutter!',
-//           style: TextStyle(fontSize: 24),
-//         ),
-//       ),
-//     );
-//   }
-// }
